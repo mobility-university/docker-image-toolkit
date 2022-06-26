@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+if [ ! -d src/strace ]; then
+  echo "patching strace" >&2
+  mkdir -p build
+  rm -rf build/u-root
+  git clone --branch v7.0.0 --depth 1 https://github.com/u-root/u-root.git build/u-root
+  (cd build/u-root && git apply ../../src/strace.patch)
+  cp -r build/u-root/pkg/strace src/strace
+  rm -rf build/u-root
+fi
