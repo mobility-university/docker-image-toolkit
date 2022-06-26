@@ -7,7 +7,7 @@
 # Motivation
 
 Docker should make the internet more secure.
-But many images just base on an old base image and install your software on top of it. This results that you need to care about your security vulnerabilities as well as the security vulnerabilites in the base image. And due to mostly quite huge base images, they tend to contain many vulnerabilities.
+But many images just base on an old base image and install your software on top of it. This results that you need to care about your security vulnerabilities as well as the security vulnerabilities in the base image. And due to mostly quite huge base images, they tend to contain many vulnerabilities.
 
 It's quite difficult to built a image from scratch with just a static binary at the moment. There are different solutions for this:
 * by using a systems programming language like:
@@ -26,7 +26,7 @@ There are solutions, but all are quite language/framework specific and not easy 
 
 ## Is an alpine based image a solution?
 
-Alpine images are smaller, so basically contain probably fewer vulnerabilites. But you need to switch your application from glibc to muslc. If you are unfamiliar with this, then this could introduce some confusion. Also is
+Alpine images are smaller, so basically contain probably fewer vulnerabilities. But you need to switch your application from glibc to muslc. If you are unfamiliar with this, then this could introduce some confusion. Also is
 
 ## Do distroless images solve this?
 
