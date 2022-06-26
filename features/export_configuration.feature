@@ -12,8 +12,8 @@ Feature: Export Configuration
 
       RUN touch /my_file
 
-      COPY fckubi /fckubi
-      RUN /fckubi export \
+      COPY docker-image-toolkit /docker-image-toolkit
+      RUN /docker-image-toolkit export \
         --config /my_file --path=/export
 
       FROM scratch
@@ -32,8 +32,8 @@ Feature: Export Configuration
 
       RUN mkdir -p /my_folder
 
-      COPY fckubi /fckubi
-      RUN /fckubi export \
+      COPY docker-image-toolkit /docker-image-toolkit
+      RUN /docker-image-toolkit export \
         --config /my_folder --path=/export
 
       FROM scratch
@@ -52,8 +52,8 @@ Feature: Export Configuration
 
       RUN mkdir -p /my_folder && touch /my_folder/my_file
 
-      COPY fckubi /fckubi
-      RUN /fckubi export \
+      COPY docker-image-toolkit /docker-image-toolkit
+      RUN /docker-image-toolkit export \
         --config /my_folder --path=/export
 
       FROM scratch
@@ -72,8 +72,8 @@ Feature: Export Configuration
 
       RUN mkdir -p /my_folder && touch /my_folder/my_file
 
-      COPY fckubi /fckubi
-      RUN /fckubi export \
+      COPY docker-image-toolkit /docker-image-toolkit
+      RUN /docker-image-toolkit export \
         --config /my_folder/my_file --path=/export
 
       FROM scratch

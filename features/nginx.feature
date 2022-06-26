@@ -14,9 +14,9 @@ Feature: NGINX
        && echo "curl --fail http://localhost" >> probe.sh \
        && chmod +x /probe.sh
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
       RUN ! ./probe.sh
-      RUN /fckubi export \
+      RUN /docker-image-toolkit export \
         --path /export --probe /probe.sh -- nginx -g 'daemon off;'
 
       FROM scratch
@@ -82,8 +82,8 @@ Feature: NGINX
        && echo "sleep 1s" >> /probe.sh \
        && chmod +x /probe.sh
 
-      COPY fckubi /fckubi
-      RUN /fckubi export \
+      COPY docker-image-toolkit /docker-image-toolkit
+      RUN /docker-image-toolkit export \
         --path /export --probe /probe.sh -- nginx -g 'daemon off;'
 
       FROM scratch

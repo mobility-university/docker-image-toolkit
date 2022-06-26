@@ -15,7 +15,7 @@ def execute(context, command):
             'run',
             '--rm',
             '-v',
-            f'{os.getcwd()}/build/fckubi:/bin/fckubi',
+            f'{os.getcwd()}/build/docker-image-toolkit:/bin/docker-image-toolkit',
             'alpine',
         ]
         + command.split(' '),
@@ -55,7 +55,7 @@ def build_docker_image(context):
     check_call(["cp", "-r", "src", "build"])
 
     check_call(
-        ["docker", "build", "--file=build/Dockerfile", "-t=fckubi", "build"],
+        ["docker", "build", "--file=build/Dockerfile", "-t=docker-image-toolkit", "build"],
         stdout=PIPE if 'verbose' in os.environ else DEVNULL,
         stderr=PIPE if "verbose" in os.environ else DEVNULL,
     )
@@ -65,7 +65,7 @@ def build_docker_image(context):
 @then("it needs {size} MB")
 def measure_size(context, size):
     export_files()
-    actual = f'{os.path.getsize("build/fckubi.tar") / 1024 / 1024:.1f}'
+    actual = f'{os.path.getsize("build/docker-image-toolkit.tar") / 1024 / 1024:.1f}'
     assert size == actual, f'{actual} != {size}'
 
 
@@ -81,7 +81,7 @@ def instantiate_in_background(context):
         command = row["command"].split(" ")
     try:
         check_call(
-            ["docker", "stop", "fckubi"],
+            ["docker", "stop", "docker-image-toolkit"],
             stdout=PIPE if 'verbose' in os.environ else DEVNULL,
             stderr=PIPE if 'verbose' in os.environ else DEVNULL,
         )
@@ -89,14 +89,14 @@ def instantiate_in_background(context):
         ...
     try:
         check_call(
-            ["docker", "rm", "fckubi"],
+            ["docker", "rm", "docker-image-toolkit"],
             stdout=PIPE if 'verbose' in os.environ else DEVNULL,
             stderr=PIPE if 'verbose' in os.environ else DEVNULL,
         )
     except:
         ...
     context.process = Popen(
-        ["docker", "run", "--rm", "--name=fckubi"] + options + ["fckubi"] + command,
+        ["docker", "run", "--rm", "--name=docker-image-toolkit"] + options + ["docker-image-toolkit"] + command,
         stdout=PIPE if 'verbose' in os.environ else DEVNULL,
         stderr=PIPE if 'verbose' in os.environ else DEVNULL,
     )
@@ -142,7 +142,7 @@ def check_files(context):
 @then('instantiating the image with command «{command}» results in')
 def check_output_of_docker(context, command):
     out = (
-        check_output(["docker", "run", "--rm", "fckubi"] + command.split(" "))
+        check_output(["docker", "run", "--rm", "docker-image-toolkit"] + command.split(" "))
         .decode("utf-8")
         .strip()
     )  # TODO: shlex
@@ -194,7 +194,7 @@ def ensure_links(context):
     assert actual == expected, f'{actual} != {expected}'
 
 
-def export_files(destination='build/export', image='fckubi'):
+def export_files(destination='build/export', image='docker-image-toolkit'):
     def is_system_file(path):  # TODO: diff from scratch
         if path.startswith(f"{destination}/etc"):
             return True

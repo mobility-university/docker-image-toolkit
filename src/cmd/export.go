@@ -15,7 +15,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/u-root/u-root/pkg/ldd"
-	"golang.org/mobility-university/fckubi/strace"
+	"golang.org/mobility-university/docker-image-toolkit/strace"
 
 	"golang.org/x/sys/unix"
 )
@@ -40,7 +40,7 @@ var exportCmd = &cobra.Command{
 
 Add this to your Dockerimage as last step.
 
-RUN /fckubi export --path /export -- /my_custom_program
+RUN /docker-image-toolkit export --path /export -- /my_custom_program
 	`,
 	Run: exeee,
 }

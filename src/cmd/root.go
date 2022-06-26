@@ -7,8 +7,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "fckubi",
-	Short: "fckubi",
+	Use:   "docker-image-toolkit",
+	Short: "docker-image-toolkit",
 	Long:  `Cause containers should improve security.`,
 }
 

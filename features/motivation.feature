@@ -23,9 +23,9 @@ Feature: Motivation
       """
       FROM alpine:3.15.0 as development
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
-      RUN /fckubi export --binary /bin/sh --path=/export -- echo "test"
+      RUN /docker-image-toolkit export --binary /bin/sh --path=/export -- echo "test"
 
       FROM scratch
       COPY --from=development /export /

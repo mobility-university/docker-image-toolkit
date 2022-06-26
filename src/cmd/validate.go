@@ -13,7 +13,7 @@ import (
 // validateCmd represents the validate command
 var validateCmd = &cobra.Command{
 	Use:   "validate",
-	Short: "validates a docker image if fckubi is applied correct",
+	Short: "validates a docker image if docker-image-toolkit is applied correct",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 

@@ -8,9 +8,9 @@ Feature: Report Unused
       """
       FROM alpine
 
-      # FIXME: replace python3 by a static fckubi binary
+      # FIXME: replace python3 by a static docker-image-toolkit binary
       RUN apk add python3 strace
-      COPY src/fckubi.py /fckubi
+      COPY src/docker-image-toolkit.py /docker-image-toolkit
       RUN echo "#!/bin/sh" > /start.sh \
        && echo "echo hello" >> /start.sh \
        && echo "sleep 5s" >> /start.sh \
@@ -20,7 +20,7 @@ Feature: Report Unused
 
       """
     When I build this docker image
-    Then instantiating the image with command «/fckubi --trace-unused-files=/unused --destination=/TODO_delete -- /start.sh» results in
+    Then instantiating the image with command «/docker-image-toolkit --trace-unused-files=/unused --destination=/TODO_delete -- /start.sh» results in
       """
       huhuhi
       """

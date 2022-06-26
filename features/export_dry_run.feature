@@ -15,10 +15,10 @@ Feature: Export Dry Run
 
       RUN echo '#!/bin/sh' > /my_command && chmod +x /my_command
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
       # TODO: remove binary
-      RUN /fckubi export --path=/export -- sh ./my_command
+      RUN /docker-image-toolkit export --path=/export -- sh ./my_command
 
       FROM scratch
       COPY --from=development /export /
@@ -39,10 +39,10 @@ Feature: Export Dry Run
       """
       FROM alpine as development
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
       # TODO: remove binary
-      RUN /fckubi export --path=/export -- /bin/false
+      RUN /docker-image-toolkit export --path=/export -- /bin/false
 
       FROM scratch
       COPY --from=development /export /
@@ -65,10 +65,10 @@ Feature: Export Dry Run
       RUN echo '#!/bin/sh' > /my_command && echo "/my_command2" >> /my_command && chmod +x /my_command
       RUN echo '#!/bin/sh' > /my_command2 && chmod +x /my_command2
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
       # TODO: remove binary
-      RUN /fckubi export --path=/export -- sh ./my_command
+      RUN /docker-image-toolkit export --path=/export -- sh ./my_command
 
       FROM scratch
       COPY --from=development /export /
@@ -92,10 +92,10 @@ Feature: Export Dry Run
       RUN echo '#!/bin/sh' > /my_command && echo "echo test" >> /my_command && chmod +x /my_command
       RUN echo '#!/bin/sh' > /my_command2 && echo "echo test" >> /my_command2 && chmod +x /my_command2
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
       # TODO: remove binary
-      RUN /fckubi export \
+      RUN /docker-image-toolkit export \
         --path=/export -- ./my_command -- ./my_command2
 
       FROM scratch
@@ -117,10 +117,10 @@ Feature: Export Dry Run
 
       RUN touch /my_file
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
       # TODO: remove binary
-      RUN /fckubi export --path=/export -- sh -c "cat /my_file"
+      RUN /docker-image-toolkit export --path=/export -- sh -c "cat /my_file"
 
       FROM scratch
       COPY --from=development /export /
@@ -168,11 +168,11 @@ Feature: Export Dry Run
 
       RUN apt update && apt-get install -y gcc
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
       COPY fork.c /fork.c
       RUN touch /child /parent && gcc /fork.c -o/fork && /fork
 
-      RUN /fckubi export --path=/export -- /fork
+      RUN /docker-image-toolkit export --path=/export -- /fork
 
       FROM scratch
       COPY --from=development /export /
@@ -198,9 +198,9 @@ Feature: Export Dry Run
         echo 'cat /my_file' >> /my_command && \
         chmod +x /my_command
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
-      RUN /fckubi export --path=/export -- ./my_command
+      RUN /docker-image-toolkit export --path=/export -- ./my_command
 
       FROM scratch
       COPY --from=development /export /
@@ -228,9 +228,9 @@ Feature: Export Dry Run
         echo 'wait' >> /my_command && \
         chmod +x /my_command
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
-      RUN /fckubi export \
+      RUN /docker-image-toolkit export \
         --path=/export -- ./my_command
 
       FROM scratch

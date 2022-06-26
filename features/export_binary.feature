@@ -12,9 +12,9 @@ Feature: Export_Binary
 
       RUN echo '#!/bin/sh' > /my_command && chmod +x /my_command
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
-      RUN /fckubi export --binary /my_command --path=/export
+      RUN /docker-image-toolkit export --binary /my_command --path=/export
 
       FROM scratch
       COPY --from=development /export /
@@ -30,9 +30,9 @@ Feature: Export_Binary
       """
       FROM alpine as development
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
-      RUN /fckubi export --binary /bin/true --path=/export
+      RUN /docker-image-toolkit export --binary /bin/true --path=/export
 
       FROM scratch
       COPY --from=development /export /
@@ -51,10 +51,10 @@ Feature: Export_Binary
       """
       FROM alpine as development
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
       RUN ln -s /bin/busybox /bin/my_symlink
 
-      RUN /fckubi export --binary /bin/my_symlink --path=/export
+      RUN /docker-image-toolkit export --binary /bin/my_symlink --path=/export
 
       FROM scratch
       COPY --from=development /export /
@@ -72,10 +72,10 @@ Feature: Export_Binary
       """
       FROM alpine as development
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
       RUN ln /bin/busybox /bin/my_symlink
 
-      RUN /fckubi export --binary /bin/my_symlink --path=/export
+      RUN /docker-image-toolkit export --binary /bin/my_symlink --path=/export
 
       FROM scratch
       COPY --from=development /export /
@@ -92,11 +92,11 @@ Feature: Export_Binary
       """
       FROM alpine as development
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
       RUN apk update && apk add python3
       RUN ln /bin/busybox /bin/my_symlink
 
-      RUN /fckubi export \
+      RUN /docker-image-toolkit export \
         --binary /usr/bin/python3 \
         --path=/export
 
@@ -117,9 +117,9 @@ Feature: Export_Binary
       """
       FROM alpine as development
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
-      RUN /fckubi export \
+      RUN /docker-image-toolkit export \
         --binary /bin/true \
         --binary /bin/false \
         --path=/export

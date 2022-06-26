@@ -11,8 +11,8 @@ Feature: Python
 
       RUN apk add python3
 
-      COPY fckubi /fckubi
-      RUN export PYTHONDONTWRITEBYTECODE=1 && /fckubi export --path=/export -- /usr/bin/python3.10 -B -c "print('hello')"
+      COPY docker-image-toolkit /docker-image-toolkit
+      RUN export PYTHONDONTWRITEBYTECODE=1 && /docker-image-toolkit export --path=/export -- /usr/bin/python3.10 -B -c "print('hello')"
       RUN find /export -iname '*.pyc' | xargs rm  # TODO!!!
 
       FROM scratch
@@ -55,12 +55,12 @@ Feature: Python
 
       RUN apk add python3
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
       COPY foo.py /foo.py
       RUN chmod +x /foo.py
 
       # TODO: remove PATH
-      RUN PATH=/usr/bin /fckubi export --binary /usr/bin/env --path=/export -- /foo.py
+      RUN PATH=/usr/bin /docker-image-toolkit export --binary /usr/bin/env --path=/export -- /foo.py
       RUN chmod 777 /export/usr/bin/* # TODO
       RUN find /export -iname '*.pyc' | xargs rm  # TODO!!!
 
@@ -115,11 +115,11 @@ Feature: Python
       RUN apk add python3
 
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
       COPY foo.py /foo.py
       COPY foo.sh /foo.sh
 
-      RUN /fckubi export --path=/export -- sh /foo.sh
+      RUN /docker-image-toolkit export --path=/export -- sh /foo.sh
       RUN find /export -iname '*.pyc' | xargs rm  # TODO!!!
 
       FROM scratch
@@ -179,8 +179,8 @@ Feature: Python
 
       RUN apk add python3
 
-      COPY fckubi /fckubi
-      RUN export PYTHONDONTWRITEBYTECODE=1 && /fckubi export --path=/export -- /usr/bin/python3 -B -c "print('hello')"
+      COPY docker-image-toolkit /docker-image-toolkit
+      RUN export PYTHONDONTWRITEBYTECODE=1 && /docker-image-toolkit export --path=/export -- /usr/bin/python3 -B -c "print('hello')"
       RUN chmod 777 /export/usr/bin/* # TODO
       RUN find /export -iname '*.pyc' | xargs rm  # TODO!!!
 

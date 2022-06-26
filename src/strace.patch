@@ -9,8 +9,8 @@ index b376518b..7d08dd49 100644
 -	"github.com/u-root/u-root/pkg/strace/internal/abi"
 -	"github.com/u-root/u-root/pkg/strace/internal/binary"
  	"github.com/u-root/u-root/pkg/ubinary"
-+	"golang.org/mobility-university/fckubi/strace/internal/abi"
-+	"golang.org/mobility-university/fckubi/strace/internal/binary"
++	"golang.org/mobility-university/docker-image-toolkit/strace/internal/abi"
++	"golang.org/mobility-university/docker-image-toolkit/strace/internal/binary"
  	"golang.org/x/sys/unix"
  )
  
@@ -23,7 +23,7 @@ index cf202b4e..4aa48339 100644
  	"time"
  
 -	"github.com/u-root/u-root/pkg/strace/internal/abi"
-+	"golang.org/mobility-university/fckubi/strace/internal/abi"
++	"golang.org/mobility-university/docker-image-toolkit/strace/internal/abi"
  	"golang.org/x/sys/unix"
  )
  

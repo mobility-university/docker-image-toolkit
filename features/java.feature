@@ -25,8 +25,8 @@ Feature: Java
       RUN java -jar Main.jar
       ENV LD_LIBRARY_PATH=/usr/lib/jvm/java-11-openjdk/lib/server/
 
-      COPY fckubi /fckubi
-      RUN /fckubi export --path=/export -- /usr/lib/jvm/java-11-openjdk/bin/java -jar Main.jar
+      COPY docker-image-toolkit /docker-image-toolkit
+      RUN /docker-image-toolkit export --path=/export -- /usr/lib/jvm/java-11-openjdk/bin/java -jar Main.jar
 
       FROM scratch
       COPY --from=development /export /

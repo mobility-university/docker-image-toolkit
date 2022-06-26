@@ -10,9 +10,9 @@ Feature: Export Archives
 
       RUN echo '#!/bin/sh' > /my_command && chmod +x /my_command
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
-      RUN /fckubi export \
+      RUN /docker-image-toolkit export \
         --binary /my_command --path=/export
 
       FROM scratch
@@ -30,9 +30,9 @@ Feature: Export Archives
       """
       FROM alpine as development
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
-      RUN /fckubi export \
+      RUN /docker-image-toolkit export \
         --binary /bin/true \
         --binary /bin/false \
         --path=/export

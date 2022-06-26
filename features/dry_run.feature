@@ -9,10 +9,10 @@ Feature: Dry Run
       RUN echo "#!/bin/sh" > /my_command
       RUN chmod +x /my_command
 
-      COPY fckubi /fckubi
+      COPY docker-image-toolkit /docker-image-toolkit
 
       # TODO: remove binary
-      RUN /fckubi export \
+      RUN /docker-image-toolkit export \
         --binary /bin/sh \
         --path=/export -- ./my_command
 

@@ -1,4 +1,4 @@
-module golang.org/mobility-university/fckubi
+module golang.org/mobility-university/docker-image-toolkit
 
 go 1.15
 

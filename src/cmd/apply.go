@@ -13,7 +13,7 @@ import (
 // applyCmd represents the apply command
 var applyCmd = &cobra.Command{
 	Use:   "apply",
-	Short: "applies fckubi into a docker image",
+	Short: "applies docker-image-toolkit into a docker image",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
