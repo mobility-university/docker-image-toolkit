@@ -1,6 +1,6 @@
 # Docker Image Toolkit
 
-[![ci](https://github.com/mobility-university/fckubi/actions/workflows/ci.yml/badge.svg)](https://github.com/mobility-university/fckubi/actions/workflows/ci.yml)
+[![ci](https://github.com/mobility-university/docker-image-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/mobility-university/docker-image-toolkit/actions/workflows/ci.yml)
 
 "_minimize images, maximize security, spin up faster_"
 
