@@ -1,0 +1,77 @@
+name: ci
+on:
+  pull_request:
+    paths:
+    - '**'
+  push:
+    branches:
+    - master
+    paths:
+    - '**'
+jobs:
+  ci:
+    name: CI
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Done
+        run: exit 0
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        set -e
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        sudo apt-get install -y golang 
+    - name: compile
+      run: ./bin/build_elf
+    - name: Verify Specification
+      run: |
+        ./bin/test_specification
+  unittest:
+    name: Unittest
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Verify Specification
+      run: bin/unittest
+  language:
+    name: Language
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Verify Specification
+      run: bin/language
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Verify Specification
+      run: ./bin/build_elf && bin/lint
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Verify Specification
+      run: bin/format

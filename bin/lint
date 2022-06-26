@@ -1,0 +1,60 @@
+#!/bin/bash
+set -e
+
+options=""
+if [ -t 0 ]; then
+  options="${options} --tty"
+fi
+
+function dockerlint {
+  file=${1}
+  echo -n "checking ${file} ... "
+  docker run --rm -i hadolint/hadolint:v2.7.0 hadolint --ignore DL3003 --ignore DL3013 --ignore DL3059 --ignore SC1071 --ignore SC2035 --ignore DL3007 - < "${file}"
+}
+
+mkdir -p build/flake8 && cat > build/flake8/Dockerfile << EOF
+FROM python:3-alpine
+
+RUN pip install \
+  flake8==3.9.2 \
+  flake8-builtins==1.5.3 \
+  flake8-bugbear==21.4.3 \
+  flake8-coding==1.3.2 \
+  flake8-comprehensions==3.5.0 \
+  flake8-debugger==4.0.0 \
+  flake8-eradicate==1.1.0 \
+  flake8-executable==2.1.1 \
+  flake8-mutable==1.2.0 \
+  flake8-pie==0.14.0 \
+  flake8-simplify==0.14.1
+
+ENTRYPOINT ["flake8"]
+CMD ["--help"]
+EOF
+docker build --file build/flake8/Dockerfile --tag flake8 --quiet build/flake8 &>/dev/null
+
+# TODO: PIE789
+docker run --rm --user $UID -v $(pwd):/work --net=none -w /work flake8 \
+  --ignore=A001,A002,A003,B001,B008,B011,B901,C101,C408,C812,D100,D101,D102,D103,D104,D107,E501,E722,E731,EXE002,I201,PIE786,PIE789,PIE798,S101,S108,S301,S311,S403,S404,S603,S605,S607,S608,W503 \
+  $(find */ -name '*.py' | cut -d '/' -f 1 | uniq)
+
+# TODO
+#./dev pylint \
+
+docker run --rm -w /work --net=none -w /work -v $(pwd):/work gherkin/lint --disable TooManyDifferentTags,TooManyTags 'features/*.feature'
+
+find . -name '*.sh' | grep -v '^./build/' |
+  xargs -I {} docker run --rm -t -v $(pwd):/work koalaman/shellcheck \
+    --exclude SC2002,SC2011,SC2012,SC2027,SC2035,SC2038,SC2046,SC2048,SC2068,SC2086,SC2154,SC2155,SC2236 /work/{}
+
+mkdir -p build/golint && cat > build/golint/Dockerfile << EOF
+FROM golang
+
+RUN go install honnef.co/go/tools/cmd/staticcheck@latest
+
+ENTRYPOINT ["staticcheck"]
+CMD ["--help"]
+EOF
+docker build --file build/golint/Dockerfile --tag golint --quiet build/golint &>/dev/null
+
+(cd src && find cmd -name '*.go' | sed 's/\.\///' | xargs docker run --rm -v $(pwd):/work -w /work golint)

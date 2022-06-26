@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+./bin/patch_strace
+GOOS=linux GOARCH=amd64 bin/build

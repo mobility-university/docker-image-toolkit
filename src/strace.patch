@@ -1,0 +1,43 @@
+diff --git a/pkg/strace/socket.go b/pkg/strace/socket.go
+index b376518b..7d08dd49 100644
+--- a/pkg/strace/socket.go
++++ b/pkg/strace/socket.go
+@@ -18,9 +18,9 @@ import (
+ 	"fmt"
+ 	"strings"
+ 
+-	"github.com/u-root/u-root/pkg/strace/internal/abi"
+-	"github.com/u-root/u-root/pkg/strace/internal/binary"
+ 	"github.com/u-root/u-root/pkg/ubinary"
++	"golang.org/mobility-university/fckubi/strace/internal/abi"
++	"golang.org/mobility-university/fckubi/strace/internal/binary"
+ 	"golang.org/x/sys/unix"
+ )
+ 
+diff --git a/pkg/strace/syscall_linux.go b/pkg/strace/syscall_linux.go
+index cf202b4e..4aa48339 100644
+--- a/pkg/strace/syscall_linux.go
++++ b/pkg/strace/syscall_linux.go
+@@ -22,7 +22,7 @@ import (
+ 	"syscall"
+ 	"time"
+ 
+-	"github.com/u-root/u-root/pkg/strace/internal/abi"
++	"golang.org/mobility-university/fckubi/strace/internal/abi"
+ 	"golang.org/x/sys/unix"
+ )
+ 
+diff --git a/pkg/strace/tracer.go b/pkg/strace/tracer.go
+index ca7a9969..6e80f9b6 100644
+--- a/pkg/strace/tracer.go
++++ b/pkg/strace/tracer.go
+@@ -216,6 +216,9 @@ func Trace(c *exec.Cmd, recordCallback ...EventCallback) error {
+ 		unix.PTRACE_O_TRACESYSGOOD|
+ 			// Kill tracee if tracer exits.
+ 			unix.PTRACE_O_EXITKILL|
++			// trace execs.
++			// unix.PTRACE_EVENT_EXEC|
++			unix.PTRACE_O_TRACEEXEC|
+ 			// Automatically trace fork(2)'d, clone(2)'d, and vfork(2)'d children.
+ 			unix.PTRACE_O_TRACECLONE|unix.PTRACE_O_TRACEFORK|unix.PTRACE_O_TRACEVFORK); err != nil {
+ 		return &TraceError{

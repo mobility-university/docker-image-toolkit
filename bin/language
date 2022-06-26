@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+docker run --rm -v $(pwd):/work -i think/typos:1.3.3 --config bin/typos.toml
+find . -name '*.feature' | xargs -I {} docker run --rm -v $(pwd):/work gherkin/language /work/{}

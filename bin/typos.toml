@@ -1,0 +1,7 @@
+[default.extend-identifiers]
+
+[files]
+extend-exclude = [
+    '*.xml',
+    'go.sum'
+]

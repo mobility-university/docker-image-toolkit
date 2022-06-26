@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+./bin/patch_strace
+(cd src && CGO_ENABLED=0 go build -a --ldflags '-extldflags "-static"'  )
+mkdir -p build
+mv src/fckubi build/fckubi
