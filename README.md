@@ -65,13 +65,13 @@ COPY my-awesome-app /my-awesome-app
 
 ADD https://github.com/mobility-university/docker-image-toolkit/releases/download/v0.1.0/docker-image-toolkit /bin
 RUN chmod +x /bin/docker-image-toolkit && docker-image-toolkit export \
-  --path /export \
-  --binary $(which my-binary-to-use) -- \
+  --path=/export \
+  --binary=$(which my-binary-to-use) -- \
   /my-awesome-app --check
 
 # now start a new empty docker image
 FROM scratch
-COPY --from=development:/export /
+COPY --from=development /export /
 ```
 
 ## References
