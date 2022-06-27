@@ -2,7 +2,7 @@
 Feature: NGINX
 
   # TODO: deal about /var/run/*.pid
-  @disableUnknownVariable
+  @disableUnknownVariable @skip
   Scenario: Usage
     Given created a Docker build description like this
       """
